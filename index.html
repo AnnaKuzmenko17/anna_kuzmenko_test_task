@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>ANNA_KUZMENKO_TEST_TASK</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .box {
+        margin: 5px;
+        width: 100px;
+        height: 100px;
+        background-color: #f1f1f1;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      class="container"
+      id="container"
+    ></div>
+    <script defer>
+      const container = document.getElementById('container');
+      const positionsMap = new Map();
+
+      const initializeMap = (count) => {
+        for (let i = 0; i < count; i++) {
+          positionsMap.set(i, 0);
+        }
+      };
+
+      const getNewTargetPosition = (currentTargetPosition, index) => (currentTargetPosition === 0 ? index : 0);
+
+      const moveDiv = (div, position) => {
+        container.removeChild(div);
+        container.insertBefore(div, container.children[position]);
+      };
+
+      const getIndex = (div) => +div.dataset.index;
+
+      const handleClick = (event) => {
+        const div = event.currentTarget;
+        const index = getIndex(div);
+        const currentTargetPosition = positionsMap.get(index);
+
+        const newTargetPosition = getNewTargetPosition(currentTargetPosition, index);
+        positionsMap.set(index, newTargetPosition);
+        moveDiv(div, currentTargetPosition);
+      };
+
+      const createDivs = () => {
+        positionsMap.forEach((_, i) => {
+          const div = document.createElement('div');
+          div.classList.add('box');
+          div.innerText = `div${i+1}`;
+          div.dataset.index = i;
+          div.addEventListener('click', handleClick);
+
+          container.appendChild(div);
+        });
+      };
+
+      const initialize = () => {
+        initializeMap(100);
+        createDivs();
+      };
+
+      initialize();
+    </script>
+  </body>
+</html>
