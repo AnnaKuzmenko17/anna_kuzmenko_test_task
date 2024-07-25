@@ -37,6 +37,7 @@
       id="container"
     ></div>
     <script defer>
+      const COUNT = 100;
       const container = document.getElementById('container');
       const positionsMap = new Map();
 
@@ -78,7 +79,7 @@
       };
 
       const initialize = () => {
-        initializeMap(100);
+        initializeMap(COUNT);
         createDivs();
       };
 
